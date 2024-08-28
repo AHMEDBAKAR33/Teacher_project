@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('teachers', function (Blueprint $table) {
+        Schema::table('students_assignments', function (Blueprint $table) {
             //
-            $table->foreignId('course_id')->constrained()->onDelete('cascade')->after('phone_number');
+            $table->boolean('status');
         });
     }
 
@@ -22,10 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('teachers', function (Blueprint $table) {
+        Schema::table('students_assignments', function (Blueprint $table) {
             //
-            $table->dropForeign(['course_id']);
-            $table->dropColumn('course_id');
+            $table->dropColumn('status');
         });
     }
 };
