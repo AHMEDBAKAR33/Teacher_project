@@ -11,25 +11,19 @@ class Center extends Model
 
 
     public $fillable =[
-        'center_name'
+        'center_name',
+        'group_number'
     ];
 
-
+    public $timestamps = false;
     // Many to many Relations 
 
-    public function teachers()
-    {
-        return $this->belongsToMany(Teacher::class,'teachers_centers');
-    }
 
-    public function students()
-    {
-        return $this->belongsToMany(Student::class,'students_centers');
-    }
+        public function students(){
+            return $this->belongsToMany(Student::class,'centers_students');
+        }
 
-    public function courses()
-    {
-        return $this->belongsToMany(Course::class,'courses_centers');
-    }
-
+        
+        
+        
 }

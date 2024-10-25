@@ -10,23 +10,18 @@ class Assignment extends Model
     use HasFactory;
 
 
-    public $fillable =[
+    protected $fillable =[
         'assignment_name'
     ];
 
+    public $timestamps=false;
 
-
-    // One to One Relation with the Course 
-    public function courses()
-    {
-        return $this->belongsTo(Course::class);
-    }
 
     // Many to Many Relation with student 
 
     public function students()
     {
-        return $this->belongsToMany(Student::class,);
+        return $this->belongsToMany(Student::class,'assignments_students');
     }
     
 
