@@ -11,18 +11,34 @@
                             <label  class="text"> Ceneter Name </label>
                             <input type="text"  name="center_name"  class="form-control" placeholder="center name">
                         </div>
-                            @error('center_name')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                                @error('center_name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         <div class="mb-3">
                             <label  class="text"> Group Number </label>
                             <input type="text"  name="group_number"  class="form-control" placeholder="center name">
+                                @error('group_number')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </div>
-                        @error('group_number')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                        {{-- <label  class="text"> Group Time </label>
+                            <select  name="center_id" class="form-select" placeholder="">
+                                <option value=""> 12 - 2 </option>
+                                <option value=""> 2  - 4</option>
+                                <option value=""> 5  - 7</option>
+                            </select>
+
+                        <label  class="text"> Group Day </label>
+                            <select  name="center_id" class="form-select" placeholder="">
+                                <option value=""> السبت</option>
+                                <option value=""> الاحد</option>
+                                <option value=""> 5  - 7</option>
+                            </select> --}}
+                        
+                        <br>
+                        <button type="submit" class="btn btn-primary" style="width: 200px;">Submit</button>
+
             </form>
         </div>
     </div>

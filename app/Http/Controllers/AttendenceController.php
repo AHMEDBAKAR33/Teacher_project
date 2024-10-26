@@ -18,15 +18,20 @@ class AttendenceController extends Controller
 
         $students = $center->students;
 
-        // dd($students);
+    /* 
+        in here we created new property to the student model with the name {latestAttendance}
+        which will save the last fetch attendance we fetch from the data base to be easier to show in view 
+
+        so we can create new property to save the fetched record on it to simple the showing method 
+     */
         foreach ($students as $student){
-            
-            $attendances = Attendence::where('student_id',$student->id)->get();
+            $student->latestAttendance = $student->attendances()->get();
         }
-        return view('centers.attendance',compact('students','attendances'));
+        return view('centers.attendance',compact('students'));
     }
 
     public function create(Request $request){
+        // dd($request);
         $studentIDs= array_keys($request->is_completed);
 
         foreach($studentIDs as $studentID){
@@ -38,9 +43,8 @@ class AttendenceController extends Controller
                     'attended'=>$request->is_completed[$studentID],
                     'attendance_time'=> now(),
                 ]);
-
-
-            
         }
+
+        return redirect()->back()->with('success_message','تم تسجيل الحضور');
     }
 }

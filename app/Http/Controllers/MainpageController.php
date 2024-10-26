@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Center;
 use Illuminate\Http\Request;
 
 class MainpageController extends Controller
@@ -12,6 +13,9 @@ class MainpageController extends Controller
     public function __invoke(Request $request)
     {
         //
-        return view('layouts.MainLayout');
+        $centers = Center::all();
+        $groups  = Center::select('group_number')->get();
+        
+        return view('layouts.MainLayout',compact('centers','groups'));
     }
 }

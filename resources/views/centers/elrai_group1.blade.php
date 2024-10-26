@@ -26,6 +26,9 @@
     </div>
 </div>
 
+@if (session('success_message'))
+    <p style="color: green">{{session('success_message')}}</p>
+@endif
 
 <br>
 <a href="{{route('GroupAttendance.index',$center->id)}}" class="btn btn-success">حضور المجموعة</a>

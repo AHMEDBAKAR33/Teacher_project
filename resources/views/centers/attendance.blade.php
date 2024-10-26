@@ -10,37 +10,44 @@
 <table class="table table-bordered">
         <thead>
     <tr>
-            <th scope="col">رقم الطالب</th>
-            <th scope="col">اسم الطالب</th>
-            <th scope="col">رقم ولي الامر</th>
-            <th scope="col">التاريخ</th>
-            <th scope="col">الحضور</th>
+        <th scope="col">رقم الطالب</th>
+        <th scope="col">اسم الطالب</th>
+        <th scope="col">رقم ولي الامر</th>
+        <th scope="col">الحضور</th>
 
-    </tr>
+</tr>
         </thead>
         <tbody>
-            @foreach ($students as $student )
-            @foreach ($attendances  as $attendance  )
+        
+{{-- the Gemini method to show the student attendance records  --}}
+        @foreach ($students as $student )
+        @foreach ($student->latestAttendance as $attendance  )
+<tr>
+        <th scope="row">{{$student->id}}</th>
+        <th scope="row">{{$student->student_name}}</th>
+        <td scope="row">{{$student->father_PhoneNumber}}</td>
+        <th scope="row"> 
+                Date : [ {{ \Carbon\Carbon::parse($attendance->attendance_time)->format('d-m') }} ]
+                @if ($attendance->attended == 1)
+                        <p style="color: green">حاضر</p>
+                @else
+                        
+                        <p style="color: red">غائب</p>
+                @endif
+                
+        </th>
+</tr>
 
-            <tr>
-                <th scope="row">{{$student->id}}</th>
-                <th scope="row">{{$student->student_name}}</th>
-                <td scope="row">{{$student->father_PhoneNumber}}</td>
-                <th scope="row">{{ \Carbon\Carbon::parse($attendance->attendance_time)->format('d-m') }}
-                </th>
-                <th scope="row">{{$attendance->attended}}</th>
-            </tr>
-            @endforeach
-            @endforeach
+        @endforeach
+
+@endforeach
         </tbody>
 </table>
 
 <hr>
 
 
-{{-- Student Attendance --}}
 
-
-
+<a href="{{route('center.form')}}" class="btn btn-dark">Center</a>
 
 @endsection

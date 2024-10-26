@@ -12,7 +12,9 @@ class Center extends Model
 
     public $fillable =[
         'center_name',
-        'group_number'
+        'group_number',
+        'group_time',
+        'group_day'
     ];
 
     public $timestamps = false;
