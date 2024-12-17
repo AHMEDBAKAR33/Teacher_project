@@ -22,10 +22,17 @@
         @enderror
 
             <div class="mb-3">
-                <label  class="text"> 1رقم التليقون  </label>
-                <input type="text"  name="father_phone"  class="form-control"   placeholder="">
+                <label  class="text"> رقم ولي الامر   </label>
+                <input type="text"  name="father_PhoneNumber"  class="form-control"   placeholder="">
             </div>
-            @error('father_phone')
+            @error('father_PhoneNumber')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+            <div class="mb-3">
+                <label  class="text"> رقم الطالب  </label>
+                <input type="text"  name="student_PhoneNumber"  class="form-control"   placeholder="">
+            </div>
+            @error('student_PhoneNumber')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
             

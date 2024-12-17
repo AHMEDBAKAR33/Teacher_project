@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::table('centers', function (Blueprint $table) {
             //
-            $table->string('group_time')->after('group_number')->nullable();
+            $table->integer('group_number')->after('center_name');
+            $table->string('group_time');
             $table->string('group_day')->nullable();
         });
     }

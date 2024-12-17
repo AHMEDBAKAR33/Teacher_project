@@ -21,26 +21,25 @@
         
 {{-- the Gemini method to show the student attendance records  --}}
         @foreach ($students as $student )
-        @foreach ($student->latestAttendance as $attendance  )
 <tr>
         <th scope="row">{{$student->id}}</th>
         <th scope="row">{{$student->student_name}}</th>
         <td scope="row">{{$student->father_PhoneNumber}}</td>
         <th scope="row"> 
-                Date : [ {{ \Carbon\Carbon::parse($attendance->attendance_time)->format('d-m') }} ]
-                @if ($attendance->attended == 1)
+                Date : [ {{ \Carbon\Carbon::parse($student->LatestAttendance->attendance_time)->format('d-m') }} ]
+                @if ($student->LatestAttendance->attended == 1)
                         <p style="color: green">حاضر</p>
                 @else
                         
                         <p style="color: red">غائب</p>
                 @endif
-                
+        
         </th>
 </tr>
-
-        @endforeach
-
 @endforeach
+
+
+
         </tbody>
 </table>
 

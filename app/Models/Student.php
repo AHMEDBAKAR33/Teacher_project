@@ -16,6 +16,7 @@ class Student extends Model
     protected $fillable = [
         'student_name',
         'father_PhoneNumber',
+        'student_PhoneNumber'
     ];
 
 
@@ -26,11 +27,11 @@ class Student extends Model
     }
 
     public function students(){
-        return $this->belongsToMany(Assignment::class,'assignments_students');
-    }
+        return $this->hasMany(Assignment::class, 'student_id');
+        }
 
     public function attendances(){
-        return $this->hasMany(Attendence::class);
+        return $this->hasMany(Attendence::class,'student_id');
     }
 
 }

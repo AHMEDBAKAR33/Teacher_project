@@ -16,6 +16,6 @@ class MainpageController extends Controller
         $centers = Center::all();
         $groups  = Center::select('group_number')->get();
         
-        return view('layouts.MainLayout',compact('centers','groups'));
+        return view('homePage',compact('centers','groups'));
     }
 }

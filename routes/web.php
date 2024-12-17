@@ -22,9 +22,11 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('/',Function(){
+    return view('welcome');
+});
 
-
-Route::get('/', [MainpageController::class, '__invoke'])->name('main');
+Route::get('/Main', [MainpageController::class, '__invoke'])->name('main');
 
 
 // Teacher Routes

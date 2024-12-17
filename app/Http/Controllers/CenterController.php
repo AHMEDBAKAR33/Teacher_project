@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class CenterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Fetch all Centers 
     public function index()
     {
         // Making Form to add  Modify Delete Centers
@@ -22,39 +20,44 @@ class CenterController extends Controller
     }
 
 
+
+
+    // Create new Center with Group number 
+
     public function create(Request $request)
     {
 
         $request->validate([
             'center_name'=>'required|max:50',
             'group_number'=>'required|integer|min:1|max:3',
+            'group_time'=>'required',
+            'group_day'=>'required',
         ],
         [
             'group_number.digits_between'=>'max number is 5'
         ]);
-    
-        $groupNumber = $request->group_number;
-        for($i=1 ;$i<=$groupNumber;$i++){
 
-            $new_center=Center::create([
-                'center_name'=>$request->center_name,
-                'group_number'=>$i
-            ]);
-        }
+
+        Center::create($request->all());
+        // Loop over The given Number To create Groups For each Center = to the given number 
+        /* This my idea to fix the problem of fetching student relevant  to their Group number  */
+
+        $groupNumber = $request->group_number;
+        // for($i=1 ;$i<=$groupNumber;$i++){
+
+        //     $new_center=Center::create([
+        //         'center_name'=>$request->center_name,
+        //         'group_number'=>$i
+                
+        //     ]);
+        // }
+
         return redirect()->back()->with('successMessage', 'تم اضافة السنتر ');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Center $center)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
+
     public function edit(Center $center)
     {
         //
@@ -84,6 +87,7 @@ class CenterController extends Controller
 
 
 
+        // Fetch the Student Data according to their Group number //
     public function student_show(Center $center)
     {
 
@@ -102,21 +106,6 @@ class CenterController extends Controller
 
 
 
-    // public function elrai(Center $center){
-    //     // dd($center);
-    //     $center = Center::where('center_name',$center->center_name)->get();
-    //         return view('centers.elrai',compact('center'));
-
-    // }
-    
-    // public function elsahaba(Center $center){
-        
-    //     dd($center);
-    // }
-    // public function elamar(Center $center){
-        
-    //     dd($center);
-    // }
 
     public function ShowGroup($center_id,$group_number){
 

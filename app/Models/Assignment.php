@@ -11,17 +11,20 @@ class Assignment extends Model
 
 
     protected $fillable =[
-        'assignment_name'
+        'assignment_name',
+        'student_id',
+        'is_completed',
+        'assignment_time'
     ];
 
-    public $timestamps=false;
+    // public $timestamps=false;
 
 
     // Many to Many Relation with student 
 
     public function students()
     {
-        return $this->belongsToMany(Student::class,'assignments_students');
+        return $this->belongsToMany(Student::class);
     }
     
 

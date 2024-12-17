@@ -29,14 +29,10 @@ class StudentController extends Controller
         // making the saving logic 
         $request->validate([
             'student_name'=>'required|max:50',
-            'father_phone'=>'required|digits_between:10,12',
+            'father_PhoneNumber'=>'required|digits_between:10,12',
             'center_id' =>'required'
         ]);
-
-        $new_student = Student::create([
-            'student_name' => $request->student_name,
-            'father_PhoneNumber' => $request->father_phone,
-        ]);
+        $new_student = Student::create($request->all());
 
         $new_student->centers()->attach($request->center_id);
 

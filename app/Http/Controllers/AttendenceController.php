@@ -12,11 +12,14 @@ class AttendenceController extends Controller
 {
     //
     public function index($center_id){
+
+        // Fetch the center and related students 
         $center = Center::with('students')
         ->where('id',$center_id)
         ->first();
-
-        $students = $center->students;
+        
+        $students = $center->students->sortBy('id');
+    
 
     /* 
         in here we created new property to the student model with the name {latestAttendance}
@@ -25,10 +28,17 @@ class AttendenceController extends Controller
         so we can create new property to save the fetched record on it to simple the showing method 
      */
         foreach ($students as $student){
-            $student->latestAttendance = $student->attendances()->get();
+            $student->LatestAttendance = DB::table('attendences')
+            ->where('attendance_time', '2024-12-13 21:18:19')
+            ->select('id', 'student_id', 'attended','attendance_time') // Select only required columns
+            ->first();             
+            // $student->latestAttendance = $student->attendances()->orderBy('attendance_time','asc')->get();
         }
         return view('centers.attendance',compact('students'));
     }
+
+
+
 
     public function create(Request $request){
         // dd($request);
@@ -46,5 +56,27 @@ class AttendenceController extends Controller
         }
 
         return redirect()->back()->with('success_message','تم تسجيل الحضور');
+    }
+
+
+
+    // implement New Search To find student with his attendance 
+    public function searchStudent(Request $request)
+    {
+    
+
+    
+
+        if (!empty($request->student_name)) {
+            $students = Student::with('centers')->where('student_name', $request->student_name)->get();
+        
+            if ($students->isEmpty()) {
+                // return redirect()->back()->with('failed', 'There is no student with this name');
+                session()->flash('failed', 'There is no student with this name');
+                return redirect()->back();
+            }
+        
+            return redirect()->back()->with(['students' => $students]);
+        }
     }
 }

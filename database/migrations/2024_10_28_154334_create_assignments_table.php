@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
             $table->string('assignment_name');
+            $table->boolean('is_completed')->default(false);
+            $table->timestamp('assignment_time')->nullable();
+            $table->unsignedBigInteger('student_id');
+            $table->foreign('student_id')->references('id')
+            ->on('students')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
