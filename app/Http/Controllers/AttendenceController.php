@@ -34,12 +34,21 @@ class AttendenceController extends Controller
 
         so we can create new property to save the fetched record on it to simple the showing method 
      */
-        foreach ($students as $student){
-            $student->LatestAttendance = DB::table('attendences')
-            ->where('attendance_time', $attendance_time)
-            ->select('id', 'student_id', 'attended','attendance_time') // Select only required columns
-            ->first();             
-            // $student->latestAttendance = $student->attendances()->orderBy('attendance_time','asc')->get();
+
+     // My old logic With query builder 
+        // foreach ($students as $student){
+        //     $student->LatestAttendance = DB::table('attendences')
+        //     ->where('attendance_time', $attendance_time)
+        //     ->select('id', 'student_id', 'attended','attendance_time','test_degree','student_degree') // Select only required columns
+        //     ->first();             
+        // }
+
+        // My logic With model 
+        foreach ($students as $student) {
+            $student->latestAttendance = $student->attendances()
+                                                ->where('attendance_time', $attendance_time)
+                                                ->orderBy('attendance_time', 'desc')
+                                                ->first();
         }
         return view('centers.attendance',compact('students'));
     }
@@ -53,16 +62,19 @@ class AttendenceController extends Controller
 
 
     public function create(Request $request){
-        // dd($request);
         $studentIDs= array_keys($request->is_completed);
 
         foreach($studentIDs as $studentID){
+            
             $student = Student::findOrFail($studentID);
-
+            $studentDegree= $request->student_degree[$studentID] ;
+            
 
                 Attendence::updateOrCreate([
                     'student_id'=>$studentID,
                     'attended'=>$request->is_completed[$studentID],
+                    'test_degree'=>$request->test_degree,
+                    'student_degree'=>$studentDegree,
                     'attendance_time'=> now(),
                 ]);
         }

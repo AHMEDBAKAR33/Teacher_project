@@ -17,6 +17,8 @@ class Attendence extends Model
         'student_id',
         'attended',
         'attendance_time',
+        'test_degree',
+        'student_degree'
     ];
 
 
