@@ -31,6 +31,15 @@
 @endif
 
 <br>
-<a href="{{route('GroupAttendance.index',$center->id)}}" class="btn btn-success">حضور المجموعة</a>
+{{-- <a href="{{route('GroupAttendance.index',$center->id)}}" class="btn btn-success">حضور المجموعة</a> --}}
+<h1 style="color: rgb(6, 90, 146);font-weight:bold;">Attendance Day</h1>
+<form action="{{ route('GroupAttendance.index',[$center->id]) }}" method="GET">
+    @csrf
+    <input type="date" name="attendance_time" >
+    <button class="btn btn-outline-info" >Search</button>
+</form>
 
+@if (session('warning_message'))
+    <p style="color: red">{{ session('warning_message')  }}, {{ session('date') }} </p>
+@endif
 @endsection

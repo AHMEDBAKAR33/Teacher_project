@@ -11,9 +11,16 @@ use Illuminate\Support\Facades\DB;
 class AttendenceController extends Controller
 {
     //
-    public function index($center_id){
-
+    public function index($center_id,Request $request){
+        // dd($request->name);
         // Fetch the center and related students 
+
+        $attendance_time = $request->attendance_time;
+
+        $count = Attendence::where('attendance_time',$attendance_time)->count();
+
+        if($count>0){
+        
         $center = Center::with('students')
         ->where('id',$center_id)
         ->first();
@@ -29,12 +36,17 @@ class AttendenceController extends Controller
      */
         foreach ($students as $student){
             $student->LatestAttendance = DB::table('attendences')
-            ->where('attendance_time', '2024-12-13 21:18:19')
+            ->where('attendance_time', $attendance_time)
             ->select('id', 'student_id', 'attended','attendance_time') // Select only required columns
             ->first();             
             // $student->latestAttendance = $student->attendances()->orderBy('attendance_time','asc')->get();
         }
         return view('centers.attendance',compact('students'));
+    }
+    else{
+        return redirect()->back()->with(['warning_message'=>'No attendance at this date ','date'=>$request->attendance_time]);
+    }
+        
     }
 
 
